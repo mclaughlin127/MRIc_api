@@ -153,7 +153,7 @@ T1SegData$methods(
     function(
       st = sliceType("Sagittal"),
       atl = atlasName("Adult_286labels_10atlases_V5L"),
-      procserv = "braingps.mricloud.org",
+      procserv = "ftp.mristudio.org",
       ...
     )
     {
