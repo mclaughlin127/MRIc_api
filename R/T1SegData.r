@@ -148,23 +148,23 @@ T1SegData <- setRefClass(
 )
 
 
-T1SegData$methods(
-  initialize =
-    function(
-      st = sliceType("Sagittal"),
-      atl = atlasName("Adult_286labels_10atlases_V5L"),
-      procserv = "ftp.mristudio.org",
-      ...
-    )
-    {
-
-      processingServer <<- procserv
-      sliceType <<- st
-      atlas <<- atl
-      callSuper( ...)
-
-    }
-)
+#T1SegData$methods(
+#  initialize =
+#    function(
+#      st = sliceType("Sagittal"),
+#      atl = atlasName("Adult_286labels_10atlases_V5L"),
+#      procserv = "ftp.mristudio.org",
+#      ...
+#    )
+#    {
+#
+#      processingServer <<- procserv
+#      sliceType <<- st
+#      atlas <<- atl
+#      callSuper( ...)3
+#
+#    }
+#)
 
 
 
