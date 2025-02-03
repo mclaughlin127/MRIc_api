@@ -15,7 +15,7 @@ resolution <- objectProperties::setSingleEnum(
 #'
 #' @import objectProperties
 #' @export
-#' @export GenPopTemp
+#' @export ShapeTemp
 #'
 #' @field processingServer processing server to use for template generation
 #' @field hdr hdr data filename
@@ -24,8 +24,8 @@ resolution <- objectProperties::setSingleEnum(
 #' @field resolution of the surfaces (how many vertices)
 #' @field description Any description of the dataset (OPTIONAL)
 
-GenPopTemp <- setRefClass(
-  "GenPopTemp",
+ShapeTemp <- setRefClass(
+  "ShapeTemp",
   properties(
     fields = list(
       processingServer = "character",
