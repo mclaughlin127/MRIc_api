@@ -360,8 +360,7 @@ setMethod(f = "deleteResult",
 
             if (isJobFinished(object, jobId)) {
               r <- httr::POST(
-                paste0(object@baseUrl, "/deletejob%3Fjobid=",
-                       jobId),
+                paste0(object@baseUrl, "/deletejob%3Fjobid=", jobId));
               stop_for_status(r)
             } else {
               stop(paste("Job ", jobId, " not completed. Can't delete result!"))
