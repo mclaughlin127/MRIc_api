@@ -356,7 +356,7 @@ setGeneric(name = "deleteResult",
 #' @export
 setMethod(f = "deleteResult",
           signature(object = "MriCloudR", jobId = "character",),
-          definition = function(object, jobId)
+          definition = function(object, jobId) { 
 
             if (isJobFinished(object, jobId)) {
               r <- httr::POST(
