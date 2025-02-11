@@ -355,10 +355,8 @@ setGeneric(name = "deleteResult",
 #' @rdname deleteResult
 #' @export
 setMethod(f = "deleteResult",
-          signature(object = "MriCloudR", jobId = "character",
-                    waitForJobToFinish = 'logical'),
-          definition = function(object, jobId,
-                                waitForJobToFinish = TRUE)
+          signature(object = "MriCloudR", jobId = "character",),
+          definition = function(object, jobId)
 
             if (isJobFinished(object, jobId)) {
               r <- httr::POST(
@@ -366,7 +364,7 @@ setMethod(f = "deleteResult",
                        jobId),
               stop_for_status(r)
             } else {
-              stop(paste("Job ", jobId, " not completed. Can't download result!"))
+              stop(paste("Job ", jobId, " not completed. Can't delete result!"))
               return(NULL);
             }
 
