@@ -332,6 +332,47 @@ setMethod(f = "downloadResult",
 )
 
 
+#' @rdname deleteResult
+#' @export
+setGeneric(name = "deleteResult",
+           def = function(object, jobId = "character",
+                          waitForJobToFinish = TRUE)
+           {
+             standardGeneric("deleteResult")
+           }
+)
+
+#' delete result of processing request
+#'
+#' \code{deleteResult} deletes the result of a processing request
+#' associated with \code{jobId}, such as from a \code{\link{t1Seg}} request.
+#'
+#' @param object Object of class \code{\link{MriCloudR-class}}.
+#' @param jobId The jobId of the request, obtained from a processing request
+#' such as \code{\link{t1Seg}}
+#' @param filename Output filename for result.
+#' @return TRUE if deletion is successful. FALSE otherwise
+#' @rdname deleteResult
+#' @export
+setMethod(f = "deleteResult",
+          signature(object = "MriCloudR", jobId = "character",
+                    waitForJobToFinish = 'logical'),
+          definition = function(object, jobId,
+                                waitForJobToFinish = TRUE)
+
+            if (isJobFinished(object, jobId)) {
+              r <- httr::POST(
+                paste0(object@baseUrl, "/deletejob%3Fjobid=",
+                       jobId),
+              stop_for_status(r)
+            } else {
+              stop(paste("Job ", jobId, " not completed. Can't download result!"))
+              return(NULL);
+            }
+
+          }
+)
+
 
 #' @rdname listJobs
 #' @export
@@ -341,7 +382,7 @@ setGeneric(name = "listJobs",
              standardGeneric("listJobs")
            }
 )
-
+              
 #' List Jobs from MRI Cloud
 #'
 #' @param object Object of class \code{\link{MriCloudR-class}}.
