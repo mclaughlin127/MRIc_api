@@ -166,6 +166,7 @@ setMethod(f = "t1Seg", signature(object = "MriCloudR", data = "T1SegData"),
                         atlas_name = atlasInt,
                         target_hdr = upload_file(data$hdr),
                         target_img = upload_file(data$img)
+            
             )
             server = data$processingServer
             # if (length(server) == 0) {
@@ -187,6 +188,64 @@ setMethod(f = "t1Seg", signature(object = "MriCloudR", data = "T1SegData"),
             #						print(paste(object@baseUrl, "/t1prep", sep = ''))
 
             r <- POST(paste(object@baseUrl, "/t1prep", sep = ''),
+                      body = body,
+                      encode = "multipart", config(followlocation = 0L),
+                      progress(type = "up"));
+
+            stop_for_status(r)
+            parsed <- content(r, "parsed")
+            if(!is.null(parsed$response$status) && (parsed$response$status == "submitted"))
+            {
+              if(object@verbose)
+                print(paste("Job successfully submitted with jobId: ", parsed$response$jobId, sep = ''));
+              return(as.character(parsed$response$jobId));
+            } else
+            {
+              stop("Error submitting job")
+              return(0)
+            }
+
+
+          }
+)
+
+#' @export
+#' @rdname shapeTemp
+setGeneric(name = "shapeTemp", def = function(object, data = "ShapeTempData")
+{
+  standardGeneric("shapeTemp")
+}
+)
+
+#' Submit a LDDMM Population template generation request.
+#'
+#' \code{shapeTemp} Submits an asynchronous population template generation request, returning a
+#' job ID as reference for subsequent requests to check and retreive results.
+#'
+#' @param object Object of class \code{\link{MriCloudR-class}}.
+#' @param data A object of \code{\link{ShapeTempData}} containing payload data and
+#' metadata for the upload.
+#' @return Returns the job ID for the processing request.
+#' @export
+#' @rdname shapeTemp
+setMethod(f = "shapeTemp", signature(object = "MriCloudR", data = "ShapeTempData"),
+          definition = function(object, data)
+          {
+
+            body = list(hypertemp = upload_file(data$byu_vtl)
+                        surf_zip = upload_file(data$surfaces),
+                        config_txt = upload_file(data$txt)
+                        rigid_reg = 
+            )
+            server = data$processingServer
+
+            body$processing_serverid = server
+            body$age = data$age
+            gen = data$gender[1]
+            body$gender = gen
+            body$description = data$description
+
+            r <- POST(paste(object@baseUrl, "/ste", sep = ''),
                       body = body,
                       encode = "multipart", config(followlocation = 0L),
                       progress(type = "up"));
